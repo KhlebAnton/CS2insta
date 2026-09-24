@@ -23,7 +23,15 @@
 .map-card__bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #292d33, #101216)
+    background: linear-gradient(135deg, #292d33, #101216);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.5;
 }
 
 .map-card__pattern {

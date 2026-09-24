@@ -1,56 +1,60 @@
-# CS2 Insta Smokes
+# Обновлённая логика CS2 Insta Smokes
 
-Готовая структура на чистом HTML / CSS / JS.
+Главные изменения:
 
-Поток:
-**Карта → T/CT → карта со спавнами → lineup**
+- У карты рабочая картинка не обязательна. У карты есть отдельное `previewImage` для карточки выбора.
+- У каждого места/стороны есть отдельное `previewImage` для карточки и своё `mapImage` для рабочей карты. Оба поля необязательны.
+- У места может быть 0, 1 или много lineup-точек.
+- Если у карты только одно место — экран выбора места пропускается.
+- Если у места только один lineup — экран выбора точек пропускается и lineup открывается сразу.
+- Если карты у места нет, несколько lineup всё равно можно хранить и выбирать списком.
+- У lineup есть отдельное `previewImage` для карточки.
+- У lineup теперь `aimImages: []` — можно добавить несколько картинок прицеливания.
+- `aimImage` сохраняется как первый элемент для совместимости со старым форматом.
+- `position` — отдельное поле «где стоять».
+- Старый `data.js` автоматически мигрируется при импорте в админку.
 
-Lineup содержит:
-- картинку прицеливания;
-- картинку результата;
-- позицию;
-- тип броска (Jumpthrow и т.д.);
-- цель;
-- текстовую инструкцию.
-
-## Добавление нового lineup
-
-В `js/data.js` добавь объект в `spawns`:
+Структура:
 
 ```js
 {
-  id: 4,
-  name: "New Smoke",
-  x: 54,
-  y: 61,
-  throw: "Jumpthrow",
-  target: "A Site",
-  position: "T Spawn 4",
-  aimImage: "./images/lineups/inferno/t/4-aim.webp",
-  resultImage: "./images/lineups/inferno/t/4-result.webp",
-  note: "Встань сюда, наведи прицел и сделай jumpthrow."
+  mirage: {
+    name: "Mirage",
+    previewImage: "./images/maps/mirage/preview.jpg", // можно не указывать
+    sides: {
+      "a-site": {
+        label: "A Site",
+        previewImage: "./images/maps/mirage/a-site-preview.jpg", // превью места
+        mapImage: "./images/maps/mirage/a-site.jpg", // рабочая карта, можно не указывать
+        spawns: [
+          {
+            id: 1,
+            name: "A Smoke",
+            previewImage: "./images/lineups/mirage/a/1-preview.jpg",
+            x: 42,
+            y: 63,
+            position: "У ящика справа",
+            throw: "Jumpthrow",
+            target: "Край окна",
+            aimImages: [
+              "./images/lineups/mirage/a/1-aim-1.png",
+              "./images/lineups/mirage/a/1-aim-2.png"
+            ],
+            resultImage: "./images/lineups/mirage/a/1-result.png",
+            note: "..."
+          }
+        ]
+      }
+    }
+  }
 }
 ```
 
-`x` и `y` — координаты кнопки на карте в процентах.
 
-SVG-файлы в архиве — заглушки. Замени их своими реальными скриншотами и измени расширение в `data.js`.
+## Режим без интерактивной карты
 
-## Телефон
+Рабочая карта `mapImage` у места необязательна. Если её нет, точки не размещаются на карте: lineup отображаются обычными карточками с `spawn.previewImage`. Поэтому можно сделать простой сценарий:
 
-Верстка адаптивная:
-- кнопки спавнов остаются поверх карты;
-- lineup открывается во весь экран;
-- изображения перестраиваются в одну колонку;
-- крупные touch-target кнопки;
-- поддерживается `100dvh`.
+`место / previewImage → выбор lineup → Aim → Result`
 
-## URL
-
-Есть маршруты вида:
-- `/`
-- `/inferno`
-- `/inferno/t`
-- `/inferno/ct`
-
-Для обычного shared-хостинга желательно включить SPA fallback на `index.html`. Если сервер не умеет fallback, логику можно перевести на hash URL.
+Для одного lineup карточка выбора всё равно остаётся. `side.previewImage` можно использовать как фотографию/скрин места, а `spawn.previewImage` — как превью конкретного lineup.

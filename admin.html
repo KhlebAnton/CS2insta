@@ -13,8 +13,8 @@
     <h1>Админ-панель</h1>
   </div>
   <div class="header-actions">
-    <button class="btn btn-secondary" id="importBtn">Импорт data.js</button>
-    <button class="btn btn-primary" id="exportBtn">Скачать data.js</button>
+    <button class="btn btn-secondary" id="importBtn" type="button">Импорт data.js</button>
+    <button class="btn btn-primary" id="exportBtn" type="button">Скачать data.js</button>
   </div>
 </header>
 
@@ -23,7 +23,7 @@
     <section class="panel">
       <div class="panel-title">
         <span>01 / КАРТЫ</span>
-        <button class="icon-btn" id="addMapBtn">+</button>
+        <button class="icon-btn" id="addMapBtn" type="button">+</button>
       </div>
       <div id="mapsList" class="list"></div>
     </section>
@@ -31,7 +31,7 @@
     <section class="panel">
       <div class="panel-title">
         <span>02 / СТОРОНЫ / МЕСТА</span>
-        <button class="icon-btn" id="addSideBtn">+</button>
+        <button class="icon-btn" id="addSideBtn" type="button">+</button>
       </div>
       <div id="sidesList" class="list"></div>
     </section>
@@ -39,7 +39,7 @@
     <section class="panel">
       <div class="panel-title">
         <span>03 / ТОЧКИ</span>
-        <button class="icon-btn" id="addSpawnBtn">+</button>
+        <button class="icon-btn" id="addSpawnBtn" type="button">+</button>
       </div>
       <div id="spawnsList" class="list"></div>
     </section>
@@ -51,263 +51,188 @@
         <span class="eyebrow" id="workspaceEyebrow">ВЫБЕРИТЕ КАРТУ</span>
         <h2 id="workspaceTitle">Карта</h2>
       </div>
-
       <div class="workspace-actions">
-        <button class="btn btn-danger" id="deleteCurrentBtn">Удалить</button>
-        <button class="btn btn-primary" id="saveBtn">Сохранить</button>
+        <button class="btn btn-danger" id="deleteCurrentBtn" type="button">Удалить</button>
+        <button class="btn btn-primary" id="saveBtn" type="button">Сохранить</button>
       </div>
     </div>
 
     <div class="editor">
       <div class="map-editor">
         <div class="map-toolbar">
-          <span>КЛИКНИ ПО КАРТЕ — СОЗДАСТСЯ ТОЧКА</span>
+          <span>КЛИКНИ ПО КАРТЕ — СОЗДАСТСЯ / ПЕРЕМЕСТИТСЯ ТОЧКА</span>
           <span id="mapHint">КАРТА МЕСТА</span>
         </div>
-
         <div class="map-stage" id="mapStage">
-          <div class="empty-map">
-            Сначала выбери место
-          </div>
+          <div class="empty-map">Сначала выбери место</div>
         </div>
       </div>
 
-      <form class="form" id="entityForm">
+      <form class="form" id="entityForm" onsubmit="return false">
 
         <div class="form-section">
           <div class="section-heading">КАРТА</div>
 
           <label>
             <span>ID карты</span>
-            <input
-              id="mapIdInput"
-              type="text"
-              placeholder="mirage"
-            >
+            <input id="mapIdInput" type="text" placeholder="mirage">
           </label>
 
           <label>
             <span>Название карты</span>
-            <input
-              id="mapNameInput"
-              type="text"
-              placeholder="Mirage"
-            >
+            <input id="mapNameInput" type="text" placeholder="Mirage">
           </label>
+
+          <label>
+            <span>Превью карты — необязательно</span>
+            <input id="mapPreviewInput" type="file" accept="image/*,.svg">
+          </label>
+          <div id="mapPreviewBox" class="preview-upload"></div>
+
+          <label>
+            <span>Путь к превью карты</span>
+            <input id="mapPreviewPathInput" type="text" placeholder="./images/maps/mirage/preview.jpg">
+          </label>
+
+          <p class="hint">
+            У самой карты изображение необязательно. Изображение может быть только у конкретного места.
+          </p>
         </div>
 
         <div class="form-section">
-          <div class="section-heading">
-            СТОРОНА / МЕСТО
-          </div>
+          <div class="section-heading">СТОРОНА / МЕСТО</div>
 
           <label>
             <span>ID</span>
-            <input
-              id="sideIdInput"
-              type="text"
-              placeholder="t"
-            >
+            <input id="sideIdInput" type="text" placeholder="t, ct, a-site, mid">
           </label>
 
           <label>
             <span>Название</span>
-            <input
-              id="sideLabelInput"
-              type="text"
-              placeholder="T SIDE"
-            >
+            <input id="sideLabelInput" type="text" placeholder="T SIDE / A SITE / MID">
           </label>
 
           <label>
-            <span>
-              Карта именно этого места
-            </span>
+            <span>Превью места — необязательно</span>
+            <input id="sidePreviewInput" type="file" accept="image/*,.svg">
+          </label>
+          <div id="sidePreviewBox" class="preview-upload"></div>
 
+          <label>
+            <span>Путь к превью места</span>
+            <input id="sidePreviewPathInput" type="text" placeholder="./images/maps/mirage/t-preview.jpg">
+          </label>
+
+          <label>
+            <span>Рабочая карта этого места — необязательно</span>
             <div class="file-row">
-              <input
-                id="mapImageInput"
-                type="file"
-                accept="image/*,.svg"
-              >
-
-              <span
-                id="mapImageName"
-                class="file-name"
-              >
-                Файл не выбран
-              </span>
+              <input id="mapImageInput" type="file" accept="image/*,.svg">
+              <span id="mapImageName" class="file-name">Файл не выбран</span>
             </div>
           </label>
 
           <label>
-            <span>
-              Путь к карте этого места
-            </span>
-
-            <input
-              id="mapImagePathInput"
-              type="text"
-              placeholder="./images/maps/mirage/t.jpg"
-            >
+            <span>Путь к карте этого места</span>
+            <input id="mapImagePathInput" type="text" placeholder="./images/maps/mirage/t.jpg">
           </label>
+
+          <p class="hint">
+            Если карта не нужна, оставь поле пустым. При нескольких точках без карты админка всё равно сохранит их.
+          </p>
         </div>
 
         <div class="form-section">
-          <div class="section-heading">
-            ТОЧКА
-          </div>
+          <div class="section-heading">ТОЧКА / LINEUP</div>
 
           <label>
             <span>Название</span>
-            <input
-              id="nameInput"
-              type="text"
-              placeholder="Window Smoke"
-            >
+            <input id="nameInput" type="text" placeholder="Window Smoke">
+          </label>
+
+          <label>
+            <span>Превью lineup — необязательно</span>
+            <input id="spawnPreviewInput" type="file" accept="image/*,.svg">
+          </label>
+          <div id="spawnPreviewBox" class="preview-upload"></div>
+
+          <label>
+            <span>Путь к превью lineup</span>
+            <input id="spawnPreviewPathInput" type="text" placeholder="./images/lineups/mirage/t/1-preview.jpg">
           </label>
 
           <div class="two-cols">
             <label>
-              <span>X, %</span>
-              <input
-                id="xInput"
-                type="number"
-                min="0"
-                max="100"
-                step="0.01"
-              >
+              <span>X, % — положение на карте</span>
+              <input id="xInput" type="number" min="0" max="100" step="0.01">
             </label>
-
             <label>
-              <span>Y, %</span>
-              <input
-                id="yInput"
-                type="number"
-                min="0"
-                max="100"
-                step="0.01"
-              >
+              <span>Y, % — положение на карте</span>
+              <input id="yInput" type="number" min="0" max="100" step="0.01">
             </label>
           </div>
 
           <label>
+            <span>Где стоять / позиция</span>
+            <input id="positionInput" type="text" placeholder="T Spawn, за ящиком, у стены...">
+          </label>
+
+          <label>
             <span>Бросок</span>
-            <input
-              id="throwInput"
-              type="text"
-              placeholder="Jumpthrow"
-            >
+            <input id="throwInput" type="text" placeholder="Jumpthrow">
           </label>
 
           <label>
             <span>Цель</span>
-            <input
-              id="targetInput"
-              type="text"
-              placeholder="Window"
-            >
-          </label>
-
-          <label>
-            <span>Позиция</span>
-            <input
-              id="positionInput"
-              type="text"
-              placeholder="T Spawn"
-            >
+            <input id="targetInput" type="text" placeholder="Window">
           </label>
 
           <label>
             <span>Описание</span>
-            <textarea
-              id="noteInput"
-              rows="4"
-              placeholder="Как выполнить lineup..."
-            ></textarea>
+            <textarea id="noteInput" rows="4" placeholder="Как выполнить lineup..."></textarea>
           </label>
         </div>
 
         <div class="form-section">
-          <div class="section-heading">
-            КАРТИНКИ LINEUP
-          </div>
+          <div class="section-heading">КАРТИНКИ LINEUP</div>
 
           <label>
-            <span>Aim / Прицел</span>
+            <span>Aim / Прицел — можно выбрать несколько</span>
+            <input id="aimImageInput" type="file" accept="image/*,.svg" multiple>
+          </label>
 
+          <div id="aimImagesList" class="images-list"></div>
+
+          <label>
+            <span>Добавить путь к Aim вручную</span>
             <div class="file-row">
-              <input
-                id="aimImageInput"
-                type="file"
-                accept="image/*,.svg"
-              >
-
-              <span
-                id="aimImageName"
-                class="file-name"
-              >
-                Файл не выбран
-              </span>
+              <input id="aimPathInput" type="text" placeholder="./images/lineups/mirage/t/1-aim.svg">
+              <button class="btn btn-secondary btn-small" id="addAimPathBtn" type="button">Добавить</button>
             </div>
           </label>
 
           <label>
-            <span>Result / Результат</span>
-
-            <div class="file-row">
-              <input
-                id="resultImageInput"
-                type="file"
-                accept="image/*,.svg"
-              >
-
-              <span
-                id="resultImageName"
-                class="file-name"
-              >
-                Файл не выбран
-              </span>
-            </div>
+            <span>Result / Результат — одна картинка</span>
+            <input id="resultImageInput" type="file" accept="image/*,.svg">
           </label>
+
+          <span id="resultImageName" class="file-name">Файл не выбран</span>
+          <div id="resultPreviewBox" class="preview-upload"></div>
 
           <label>
-            <span>
-              Aim — путь к готовому файлу
-            </span>
-
-            <input
-              id="aimPathInput"
-              type="text"
-              placeholder="./images/lineups/mirage/t/1-aim.svg"
-            >
+            <span>Result — путь к готовому файлу</span>
+            <input id="resultPathInput" type="text" placeholder="./images/lineups/mirage/t/1-result.svg">
           </label>
 
-          <label>
-            <span>
-              Result — путь к готовому файлу
-            </span>
-
-            <input
-              id="resultPathInput"
-              type="text"
-              placeholder="./images/lineups/mirage/t/1-result.svg"
-            >
-          </label>
+          <p class="hint">
+            Aim-картинки будут показаны в lineup как галерея. Это удобно для разных типов смока и нескольких кадров прицеливания.
+          </p>
         </div>
-
       </form>
     </div>
   </section>
 </main>
 
-<input
-  id="importFile"
-  type="file"
-  accept=".js,.json"
-  hidden
->
-
+<input id="importFile" type="file" accept=".js,.json" hidden>
 <script src="./admin.js"></script>
 </body>
 </html>

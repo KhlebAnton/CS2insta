@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090a0c">
+<meta name="description" content="CS2 Insta Smokes — instant smoke lineups со спавнов.">
+<title>CS2 Insta Smokes</title>
+
+<link rel="stylesheet" href="./css/base/reset.css">
+<link rel="stylesheet" href="./css/base/variables.css">
+<link rel="stylesheet" href="./css/layout/container.css">
+<link rel="stylesheet" href="./css/modules/header.css">
+<link rel="stylesheet" href="./css/modules/common.css">
+<link rel="stylesheet" href="./css/modules/maps.css">
+<link rel="stylesheet" href="./css/modules/spawns.css">
+<link rel="stylesheet" href="./css/modules/modal.css">
+
+<style>
+.empty-state {
+    min-height: 180px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--muted);
+    text-align: center;
+    padding: 30px;
+}
+
+.empty-state strong {
+    color: var(--text);
+    font-size: 18px;
+}
+
+.empty-state span {
+    font-size: 12px;
+}
+
+.side-card strong {
+    max-width: 80%;
+    text-transform: uppercase;
+}
+
+.side-card small {
+    max-width: 80%;
+}
+
+@media(max-width: 650px) {
+    .side-card strong {
+        max-width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container header__content">
+        <a
+            class="logo"
+            href="#/"
+            aria-label="CS2 Insta Smokes"
+        >
+            <span>CS2</span> INSTA SMOKES
+        </a>
+
+        <span class="header__label">
+            INSTANT SMOKES
+        </span>
+    </div>
+</header>
+
+<main>
+
+    <!-- =========================
+         MAPS
+    ========================== -->
+
+    <section
+        class="page page_maps is-active"
+        id="mapsPage"
+    >
+        <div class="container">
+
+            <div class="page-heading">
+                <span class="eyebrow">
+                    01 / MAPS
+                </span>
+
+                <h1>
+                    Выбери карту
+                </h1>
+            </div>
+
+            <div
+                class="maps-grid"
+                id="mapsGrid"
+            ></div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================
+         SIDES / PLACES
+    ========================== -->
+
+    <section
+        class="page page_side"
+        id="sidePage"
+    >
+        <div class="container">
+
+            <button
+                class="back-button"
+                id="backToMaps"
+                type="button"
+            >
+                ← Все карты
+            </button>
+
+            <div class="page-heading page-heading_small">
+
+                <span
+                    class="eyebrow"
+                    id="sideMapName"
+                >
+                    MAP
+                </span>
+
+                <h1>
+                    Выбери место
+                </h1>
+
+
+            </div>
+
+            <div
+                class="side-grid"
+                id="sidesGrid"
+            ></div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================
+         SPAWNS
+    ========================== -->
+
+    <section
+        class="page page_spawns"
+        id="spawnsPage"
+    >
+        <div class="container">
+
+            <button
+                class="back-button"
+                id="backToSide"
+                type="button"
+            >
+                ← Стороны
+            </button>
+
+            <div class="spawn-heading">
+
+                <div class="page-heading page-heading_small">
+
+                    <span
+                        class="eyebrow"
+                        id="spawnEyebrow"
+                    >
+                        MAP / SIDE
+                    </span>
+
+                    <h1>
+                        Выбери спавн
+                    </h1>
+
+                    <p>
+                        Нажми на номер спавна, чтобы открыть lineup.
+                    </p>
+
+                </div>
+
+                <div class="spawn-counter">
+                    <strong id="spawnCount">0</strong>
+                    <span>lineups</span>
+                </div>
+
+            </div>
+
+
+            <div class="map-wrap">
+
+                <div class="map-toolbar">
+
+                    <span id="mapToolbarName">
+                        MAP
+                    </span>
+
+                    <span id="mapToolbarSide">
+                        SIDE
+                    </span>
+
+                </div>
+
+                <div class="spawn-map">
+
+                    <img
+                        id="spawnMapImage"
+                        src=""
+                        alt=""
+                    >
+
+                    <div
+                        class="spawn-points"
+                        id="spawnPoints"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+
+<!-- =========================
+     LINEUP MODAL
+========================== -->
+
+<div
+    class="modal"
+    id="lineupModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal__overlay"
+        data-close
+    ></div>
+
+    <div class="modal__window">
+
+        <button
+            class="modal__close"
+            data-close
+            aria-label="Закрыть"
+            type="button"
+        >
+            ×
+        </button>
+
+
+        <div class="modal__header">
+
+            <div>
+
+                <span
+                    class="eyebrow"
+                    id="lineupEyebrow"
+                >
+                    MAP / SIDE SPAWN 1
+                </span>
+
+                <h2 id="lineupTitle">
+                    Lineup
+                </h2>
+
+            </div>
+
+            <span
+                class="throw-badge"
+                id="lineupThrow"
+            >
+                JUMPTHROW
+            </span>
+
+        </div>
+
+
+        <div class="lineup-gallery">
+
+            <div class="gallery-main">
+
+                <img
+                    id="lineupAim"
+                    src=""
+                    alt="Позиция прицеливания"
+                >
+
+                <div class="gallery-label">
+                    01 / ПРИЦЕЛ
+                </div>
+
+            </div>
+
+
+            <div class="gallery-result">
+
+                <img
+                    id="lineupResult"
+                    src=""
+                    alt="Результат smoke"
+                >
+
+                <div class="gallery-label">
+                    02 / РЕЗУЛЬТАТ
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="lineup-details">
+
+            <div>
+                <span>Позиция</span>
+                <strong id="lineupPosition">—</strong>
+            </div>
+
+            <div>
+                <span>Бросок</span>
+                <strong id="lineupMethod">—</strong>
+            </div>
+
+            <div>
+                <span>Цель</span>
+                <strong id="lineupTarget">—</strong>
+            </div>
+
+        </div>
+
+
+        <div class="lineup-description">
+
+            <span>
+                КАК КИНУТЬ
+            </span>
+
+            <p id="lineupNote"></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="./js/data.js"></script>
+<script src="./js/app.js"></script>
+
+</body>
+</html>

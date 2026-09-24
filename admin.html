@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS2 Insta Smokes — Admin</title>
+<link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+<header class="admin-header">
+  <div>
+    <span class="eyebrow">CS2 INSTA SMOKES</span>
+    <h1>Админ-панель</h1>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-secondary" id="importBtn">Импорт data.js</button>
+    <button class="btn btn-primary" id="exportBtn">Скачать data.js</button>
+  </div>
+</header>
+
+<main class="admin-layout">
+  <aside class="sidebar">
+    <section class="panel">
+      <div class="panel-title">
+        <span>01 / КАРТЫ</span>
+        <button class="icon-btn" id="addMapBtn">+</button>
+      </div>
+      <div id="mapsList" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <span>02 / СТОРОНЫ / МЕСТА</span>
+        <button class="icon-btn" id="addSideBtn">+</button>
+      </div>
+      <div id="sidesList" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title">
+        <span>03 / ТОЧКИ</span>
+        <button class="icon-btn" id="addSpawnBtn">+</button>
+      </div>
+      <div id="spawnsList" class="list"></div>
+    </section>
+  </aside>
+
+  <section class="workspace">
+    <div class="workspace-top">
+      <div>
+        <span class="eyebrow" id="workspaceEyebrow">ВЫБЕРИТЕ КАРТУ</span>
+        <h2 id="workspaceTitle">Карта</h2>
+      </div>
+
+      <div class="workspace-actions">
+        <button class="btn btn-danger" id="deleteCurrentBtn">Удалить</button>
+        <button class="btn btn-primary" id="saveBtn">Сохранить</button>
+      </div>
+    </div>
+
+    <div class="editor">
+      <div class="map-editor">
+        <div class="map-toolbar">
+          <span>КЛИКНИ ПО КАРТЕ — СОЗДАСТСЯ ТОЧКА</span>
+          <span id="mapHint">КАРТА МЕСТА</span>
+        </div>
+
+        <div class="map-stage" id="mapStage">
+          <div class="empty-map">
+            Сначала выбери место
+          </div>
+        </div>
+      </div>
+
+      <form class="form" id="entityForm">
+
+        <div class="form-section">
+          <div class="section-heading">КАРТА</div>
+
+          <label>
+            <span>ID карты</span>
+            <input
+              id="mapIdInput"
+              type="text"
+              placeholder="mirage"
+            >
+          </label>
+
+          <label>
+            <span>Название карты</span>
+            <input
+              id="mapNameInput"
+              type="text"
+              placeholder="Mirage"
+            >
+          </label>
+        </div>
+
+        <div class="form-section">
+          <div class="section-heading">
+            СТОРОНА / МЕСТО
+          </div>
+
+          <label>
+            <span>ID</span>
+            <input
+              id="sideIdInput"
+              type="text"
+              placeholder="t"
+            >
+          </label>
+
+          <label>
+            <span>Название</span>
+            <input
+              id="sideLabelInput"
+              type="text"
+              placeholder="T SIDE"
+            >
+          </label>
+
+          <label>
+            <span>
+              Карта именно этого места
+            </span>
+
+            <div class="file-row">
+              <input
+                id="mapImageInput"
+                type="file"
+                accept="image/*,.svg"
+              >
+
+              <span
+                id="mapImageName"
+                class="file-name"
+              >
+                Файл не выбран
+              </span>
+            </div>
+          </label>
+
+          <label>
+            <span>
+              Путь к карте этого места
+            </span>
+
+            <input
+              id="mapImagePathInput"
+              type="text"
+              placeholder="./images/maps/mirage/t.jpg"
+            >
+          </label>
+        </div>
+
+        <div class="form-section">
+          <div class="section-heading">
+            ТОЧКА
+          </div>
+
+          <label>
+            <span>Название</span>
+            <input
+              id="nameInput"
+              type="text"
+              placeholder="Window Smoke"
+            >
+          </label>
+
+          <div class="two-cols">
+            <label>
+              <span>X, %</span>
+              <input
+                id="xInput"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+              >
+            </label>
+
+            <label>
+              <span>Y, %</span>
+              <input
+                id="yInput"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+              >
+            </label>
+          </div>
+
+          <label>
+            <span>Бросок</span>
+            <input
+              id="throwInput"
+              type="text"
+              placeholder="Jumpthrow"
+            >
+          </label>
+
+          <label>
+            <span>Цель</span>
+            <input
+              id="targetInput"
+              type="text"
+              placeholder="Window"
+            >
+          </label>
+
+          <label>
+            <span>Позиция</span>
+            <input
+              id="positionInput"
+              type="text"
+              placeholder="T Spawn"
+            >
+          </label>
+
+          <label>
+            <span>Описание</span>
+            <textarea
+              id="noteInput"
+              rows="4"
+              placeholder="Как выполнить lineup..."
+            ></textarea>
+          </label>
+        </div>
+
+        <div class="form-section">
+          <div class="section-heading">
+            КАРТИНКИ LINEUP
+          </div>
+
+          <label>
+            <span>Aim / Прицел</span>
+
+            <div class="file-row">
+              <input
+                id="aimImageInput"
+                type="file"
+                accept="image/*,.svg"
+              >
+
+              <span
+                id="aimImageName"
+                class="file-name"
+              >
+                Файл не выбран
+              </span>
+            </div>
+          </label>
+
+          <label>
+            <span>Result / Результат</span>
+
+            <div class="file-row">
+              <input
+                id="resultImageInput"
+                type="file"
+                accept="image/*,.svg"
+              >
+
+              <span
+                id="resultImageName"
+                class="file-name"
+              >
+                Файл не выбран
+              </span>
+            </div>
+          </label>
+
+          <label>
+            <span>
+              Aim — путь к готовому файлу
+            </span>
+
+            <input
+              id="aimPathInput"
+              type="text"
+              placeholder="./images/lineups/mirage/t/1-aim.svg"
+            >
+          </label>
+
+          <label>
+            <span>
+              Result — путь к готовому файлу
+            </span>
+
+            <input
+              id="resultPathInput"
+              type="text"
+              placeholder="./images/lineups/mirage/t/1-result.svg"
+            >
+          </label>
+        </div>
+
+      </form>
+    </div>
+  </section>
+</main>
+
+<input
+  id="importFile"
+  type="file"
+  accept=".js,.json"
+  hidden
+>
+
+<script src="./admin.js"></script>
+</body>
+</html>

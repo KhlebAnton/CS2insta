@@ -1,0 +1,130 @@
+.spawn-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 30px
+}
+
+.spawn-counter {
+    text-align: right;
+    flex: none
+}
+
+.spawn-counter strong {
+    display: block;
+    font-size: 30px;
+    line-height: 1;
+    color: var(--accent)
+}
+
+.spawn-counter span {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-top: 6px
+}
+
+.map-wrap {
+    border: 1px solid var(--line);
+    background: var(--surface)
+}
+
+.map-toolbar {
+    height: 43px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .12em
+}
+
+.map-toolbar span:last-child {
+    color: var(--accent)
+}
+
+.spawn-map {
+    position: relative;
+    overflow: hidden;
+    background: #202329
+}
+
+.spawn-map>img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover
+}
+
+.spawn-map:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 65%, rgba(0, 0, 0, .28))
+}
+
+.spawn-points {
+    position: absolute;
+    inset: 0;
+    z-index: 3
+}
+
+.spawn-point {
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    padding: 0;
+    border: 2px solid #0a0b0c;
+    background: var(--accent);
+    color: #111;
+    font-size: 15px;
+    font-weight: 900;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 6px rgba(255, 207, 69, .15), 0 8px 25px rgba(0, 0, 0, .5);
+    transition: transform .18s, box-shadow .18s
+}
+
+.spawn-point span {
+    display: block;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    margin-top: 2px
+}
+
+.spawn-point:hover,
+.spawn-point:focus-visible {
+    transform: translate(-50%, -50%) scale(1.13);
+    box-shadow: 0 0 0 8px rgba(255, 207, 69, .2), 0 10px 30px rgba(0, 0, 0, .6);
+    outline: 0
+}
+
+@media(max-width:600px) {
+    .spawn-heading {
+        align-items: start
+    }
+
+    .spawn-counter {
+        margin-top: 8px
+    }
+
+    .spawn-point {
+        width: 30px;
+        height: 30px;
+        font-size: 13px
+    }
+
+    .spawn-point span {
+        display: none;
+    }
+
+    .map-toolbar {
+        height: 38px;
+        font-size: 8px
+    }
+}
